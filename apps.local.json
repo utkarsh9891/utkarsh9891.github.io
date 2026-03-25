@@ -16,7 +16,7 @@
       "kind": "mini-app",
       "title": "CandleScan",
       "path": "candlescan/",
-      "description": "NSE-focused pattern scan, liquidity box readout, and risk score — local preview (not yet live on the public card).",
+      "description": "NSE-focused pattern scan, liquidity box readout, and risk score — mobile-first.",
       "tags": ["Markets"],
       "status": "live",
       "icon": "candle"
