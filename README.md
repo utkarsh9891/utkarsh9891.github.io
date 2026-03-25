@@ -108,6 +108,7 @@ This runs `scripts/run.sh`, which:
 |--------|---------|
 | `npm start` | `bash scripts/run.sh` — build apps from `local.apps.paths` + start server |
 | `npm run serve:only` | Only `local-dev-server.mjs` (no rebuild). Use after you already populated `candlescan/` etc. |
+| `npm run publish:candlescan` | Build CandleScan and copy **`dist/`** → **`./candlescan/`** (then commit + push this repo) |
 
 ---
 
@@ -126,17 +127,38 @@ This runs `scripts/run.sh`, which:
 
 ## Production deployment (GitHub Pages)
 
-1. Push changes to **`master`** on this repo (GitHub builds the user site from that branch).
-2. **CandleScan:** build and copy from the [candlescan](https://github.com/utkarsh9891/candlescan) repo:
+1. Push changes to **`master`** on this repo (GitHub Pages serves the default branch for user sites).
 
-   ```bash
-   cd /path/to/candlescan
-   npm run pages
-   ```
+### Ship a new CandleScan build (recommended)
 
-   Then in **this** repo: `git add candlescan`, commit, push to `master`.
+From **this** repo root:
 
-3. **`apps.json` / `apps.local.json`:** update `apps.json` for public card text and `status` (`live` vs `placeholder`). Keep `apps.local.json` in sync for local testing, or rely on `?local=1` + `apps.local.json` only.
+```bash
+npm run publish:candlescan
+```
+
+This resolves the CandleScan source from **`CANDLESCAN_DIR`**, or the **`candlescan`** row in **`local.apps.paths`**, or **`../candlescan`**, then runs **`npm ci`** (or **`npm install`**) + **`npm run build`** there and copies **`dist/`** into **`./candlescan/`**.
+
+Then commit and push:
+
+```bash
+git add candlescan apps.json index.html   # include manifest/json if you changed cards
+git commit -m "chore: deploy CandleScan"
+git push origin master
+```
+
+### Alternative (from the candlescan repo only)
+
+```bash
+cd /path/to/candlescan
+npm run pages
+```
+
+Then commit **`candlescan/`** in **this** repo as above.
+
+### App card data
+
+Public grid uses **`apps.json`** (and the embedded `#app-manifest` in **`index.html`** for `file://` fallback — keep them in sync when you change cards). **`apps.local.json`** is for **`/?local=1`** only.
 
 ---
 
