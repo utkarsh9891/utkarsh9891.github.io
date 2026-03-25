@@ -144,13 +144,64 @@
     }
   }
 
-  fetch("apps.json", { cache: "no-store" })
+  /** GitHub Pages host only — ?local=1 is ignored here so production never swaps manifests. */
+  function isGithubPagesHost() {
+    var h = (window.location.hostname || "").toLowerCase();
+    return h === "github.io" || h.slice(-10) === ".github.io";
+  }
+
+  /** Loopback, file://, RFC1918 LAN, or *.local — not public internet hostnames. */
+  function isLikelyDevHost() {
+    var h = (window.location.hostname || "").toLowerCase();
+    if (
+      h === "localhost" ||
+      h === "127.0.0.1" ||
+      h === "[::1]" ||
+      h === "0.0.0.0" ||
+      h === ""
+    ) {
+      return true;
+    }
+    if (h.length > 6 && h.slice(-6) === ".local") return true;
+    if (/^192\.168\.\d{1,3}\.\d{1,3}$/.test(h)) return true;
+    if (/^10\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(h)) return true;
+    var m = /^172\.(\d{1,3})\./.exec(h);
+    if (m) {
+      var n = parseInt(m[1], 10);
+      if (n >= 16 && n <= 31) return true;
+    }
+    return false;
+  }
+
+  /** On a dev machine (not *.github.io), ?local=1 loads apps.local.json. */
+  function wantsLocalManifest() {
+    try {
+      if (isGithubPagesHost()) return false;
+      if (!isLikelyDevHost()) return false;
+      var params = new URLSearchParams(window.location.search || "");
+      var v = params.get("local");
+      return v === "1" || v === "true";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function manifestUrl() {
+    return wantsLocalManifest() ? "apps.local.json" : "apps.json";
+  }
+
+  fetch(manifestUrl(), { cache: "no-store" })
     .then(function (r) {
       if (!r.ok) throw new Error(r.statusText);
       return r.json();
     })
     .then(render)
     .catch(function () {
+      if (wantsLocalManifest()) {
+        grid.innerHTML =
+          '<p class="app-grid__error">Could not load <code>apps.local.json</code>. Add it next to <code>index.html</code> and hard-refresh (cache). If you opened an old tab, open <code>/?local=1</code> again.</p>';
+        return;
+      }
       var embedded = parseEmbedded();
       if (embedded && embedded.items && embedded.items.length) {
         render(embedded);

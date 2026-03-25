@@ -26,3 +26,6 @@ npm-debug.log*
 temp/
 
 ## CandleScan build artifacts are committed (deployed from utkarsh9891/candlescan)
+
+## Local-only: mini-app source paths (see local.apps.paths.example)
+local.apps.paths

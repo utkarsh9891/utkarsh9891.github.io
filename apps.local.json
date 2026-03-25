@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "id": "packagesync",
+      "kind": "tool",
+      "title": "PackageSync",
+      "href": "https://packagecontrol.io/packages/PackageSync",
+      "description": "Sublime Text package for syncing packages and user settings—install via Package Control.",
+      "tags": ["Sublime Text"],
+      "status": "live",
+      "icon": "sync",
+      "featured": true
+    },
+    {
+      "id": "candlescan",
+      "kind": "mini-app",
+      "title": "CandleScan",
+      "path": "candlescan/",
+      "description": "NSE-focused pattern scan, liquidity box readout, and risk score — local preview (not yet live on the public card).",
+      "tags": ["Markets"],
+      "status": "live",
+      "icon": "candle"
+    },
+    {
+      "id": "github-profile",
+      "kind": "link",
+      "title": "GitHub",
+      "href": "https://github.com/utkarsh9891",
+      "description": "Code, experiments, and open source.",
+      "tags": [],
+      "status": "live",
+      "icon": "github"
+    }
+  ]
+}
