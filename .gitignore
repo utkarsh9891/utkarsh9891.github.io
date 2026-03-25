@@ -24,3 +24,5 @@ Desktop.ini
 npm-debug.log*
 .tmp/
 temp/
+
+## CandleScan build artifacts are committed (deployed from utkarsh9891/candlescan)
