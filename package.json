@@ -1,0 +1,9 @@
+{
+  "name": "utkarsh9891-github-io-site",
+  "private": true,
+  "description": "GitHub Pages user site",
+  "scripts": {
+    "start": "bash scripts/run.sh",
+    "serve:only": "node scripts/local-dev-server.mjs"
+  }
+}
