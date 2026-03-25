@@ -1,53 +1,152 @@
 # utkarsh9891.github.io
 
-Source for **[utkarsh9891.github.io](https://utkarsh9891.github.io)** — Utkarsh Upadhyay's personal GitHub Pages site.
+Personal site hosted on **GitHub Pages**: [utkarsh9891.github.io](https://utkarsh9891.github.io)
 
-## What you'll find here
-
-- A simple **home page** with contact links (email, LinkedIn, GitHub).
-- A **Notes** section with short, informal blurbs.
-- An **Apps & tools** grid that highlights:
-  - **[PackageSync](https://packagecontrol.io/packages/PackageSync)** — a Sublime Text package (listed on [Package Control](https://packagecontrol.io/packages/PackageSync)) for syncing packages and user settings across machines.
-  - **[CandleScan](https://github.com/utkarsh9891/candlescan)** — NSE signal scanner (in progress). Source lives in its **own repo**; built assets deploy into `candlescan/` here.
-  - A link to **GitHub** for code and repos.
-
-The home page is static HTML/CSS/JS. **CandleScan** uses a Vite build from the [candlescan repo](https://github.com/utkarsh9891/candlescan); only the **built output** lives in `candlescan/`.
-
-## Repository layout
-
-| Path | Purpose |
-|------|---------|
-| `index.html` | Page markup, notes, embedded JSON fallback for the app grid |
-| `apps.json` | Data for the Apps & tools cards (used when the site is served over HTTP) |
-| `js/site.js` | Renders the grid from `apps.json`, with fallback to `#app-manifest` in `index.html` |
-| `css/style.css` | Layout and theme |
-| `img/` | Favicons |
-| `candlescan/` | CandleScan built assets (deployed from [utkarsh9891/candlescan](https://github.com/utkarsh9891/candlescan)) |
-
-## For contributors / future you
-
-**Local preview (matches production):** from the repo root:
-
-```bash
-python3 -m http.server 8080
-```
-
-Open `http://127.0.0.1:8080/`.
-
-**Opening `index.html` as a file:** browsers may block loading `apps.json`; the page then uses the JSON inside `<script type="application/json" id="app-manifest">` in `index.html`. After you change `apps.json`, copy the same `items` array into that block if you want file-based preview to stay in sync.
-
-**New mini app on Pages:** add a folder with an `index.html` at the repo root, then add an entry to `apps.json` with `"path": "your-folder/"` and `"status": "live"`.
-
-**CandleScan deploy:** from the [candlescan repo](https://github.com/utkarsh9891/candlescan):
-
-```bash
-./scripts/deploy-to-pages.sh /path/to/utkarsh9891.github.io
-cd /path/to/utkarsh9891.github.io
-git add candlescan && git commit -m "Deploy CandleScan" && git push
-```
-
-**Card fields (summary):** `title`, `description`, `status` (`live` | `placeholder`), optional `path` (site subdirectory), optional `href` (external URL), `kind` (`tool` | `link` | other), optional `tags`, `icon` (`sync` | `github` | `candle`), optional `featured` — if `true`, that card spans two columns on wider layouts.
+Static home page, notes, and an **Apps & tools** grid. Mini-apps (e.g. [CandleScan](https://github.com/utkarsh9891/candlescan)) ship as built assets under subpaths such as `/candlescan/`.
 
 ---
 
-*If you landed here from the website: welcome. If you're browsing the repo on GitHub, the table above is what this project is for.*
+## Overview
+
+| Area | Description |
+|------|-------------|
+| **Home** | Hero, contact links, Notes |
+| **Apps & tools** | Cards driven by `apps.json` (and `apps.local.json` when testing locally with `?local=1`) |
+| **Mini-apps** | Folders at repo root (`candlescan/`, …) — usually populated by builds from separate repos |
+
+---
+
+## Tech stack
+
+- **HTML / CSS / JS** — no bundler for the main site
+- **Node.js** — local dev only (`npm start`, static server + Yahoo proxy for CandleScan)
+- **GitHub Pages** — publish from `master` (default branch for user sites)
+
+---
+
+## Prerequisites
+
+- **Node.js** LTS ([nodejs.org](https://nodejs.org)) — for `npm start`
+- **Git** — clone, optional `git pull` in `scripts/run.sh`
+- **Mini-app sources** — e.g. clone [candlescan](https://github.com/utkarsh9891/candlescan) (path configured via `local.apps.paths` or sibling `../candlescan`)
+
+---
+
+## Quick start (full site locally)
+
+```bash
+git clone https://github.com/utkarsh9891/utkarsh9891.github.io.git
+cd utkarsh9891.github.io
+cp local.apps.paths.example local.apps.paths
+# Edit local.apps.paths: one row per mini-app (see example file)
+npm start
+```
+
+Open the URLs printed in the terminal (default port **8080**).
+
+---
+
+## Project structure
+
+| Path | Purpose |
+|------|---------|
+| `index.html` | Main page; includes embedded `#app-manifest` fallback for offline `file://` |
+| `apps.json` | **Production** app card data (GitHub Pages) |
+| `apps.local.json` | **Local** card overrides when using `http://127.0.0.1:<port>/?local=1` |
+| `js/site.js` | Renders the app grid; `?local=1` on dev hosts loads `apps.local.json` |
+| `css/style.css` | Theme and layout |
+| `img/` | Favicons |
+| `candlescan/` | Built CandleScan (generated by `npm start` or deploy from candlescan repo) |
+| `local.apps.paths` | **Gitignored** — maps `<site-folder>` → local source path (see example) |
+| `local.apps.paths.example` | Template + rules for `local.apps.paths` |
+| `scripts/run.sh` | Build listed mini-apps, then start the local server |
+| `scripts/local-dev-server.mjs` | Static files + `/__candlescan-yahoo` proxy (Yahoo Finance for CandleScan on loopback) |
+| `package.json` | `npm start` → `run.sh` |
+
+---
+
+## Local development
+
+### One command (build + serve)
+
+```bash
+npm start
+```
+
+This runs `scripts/run.sh`, which:
+
+1. Optionally **`git pull`** this repository (ignored on failure).
+2. For each entry in **`local.apps.paths`** (or fallback **`../candlescan`** if the file is missing): installs deps, builds, copies output into the matching folder (e.g. `candlescan/`).
+3. Starts **`local-dev-server.mjs`** on **`127.0.0.1`** (not plain `python` — CandleScan’s production bundle needs the Yahoo proxy on localhost).
+
+### URLs (default `PORT=8080`)
+
+| URL | Use |
+|-----|-----|
+| `http://127.0.0.1:8080/?local=1` | Home with **`apps.local.json`** (e.g. live CandleScan card) |
+| `http://127.0.0.1:8080/` | Same as production card list (`apps.json`) |
+| `http://127.0.0.1:8080/candlescan/` | CandleScan (and any other printed mini-app paths) |
+
+### Environment variables
+
+| Variable | Effect |
+|----------|--------|
+| `PORT` | Server port (default `8080`) |
+| `CANDLESCAN_DIR` | Used **only** when `local.apps.paths` is **missing** — sets source for the single fallback app `candlescan/` |
+
+### `local.apps.paths` format
+
+- One row per mini-app: **`<folder-name>`** then **path** (TAB preferred; space after name also works).
+- **`package.json`** in source → `npm install` + `npm run build` → copy **`dist/`** into `<folder-name>/`.
+- **`index.html`** at source root only → copy tree into `<folder-name>/` (static app).
+
+---
+
+## npm scripts
+
+| Script | Command |
+|--------|---------|
+| `npm start` | `bash scripts/run.sh` — build apps from `local.apps.paths` + start server |
+| `npm run serve:only` | Only `local-dev-server.mjs` (no rebuild). Use after you already populated `candlescan/` etc. |
+
+---
+
+## Debugging & troubleshooting
+
+| Issue | What to try |
+|-------|-------------|
+| **Port in use** | `PORT=9000 npm start` |
+| **CandleScan “no data” on localhost** | Use **`http://127.0.0.1`** (not `file://`). Ensure you use **`npm start`** (includes Yahoo proxy). Rebuild candlescan after fetcher changes. |
+| **`local.apps.paths` errors** | Each row needs a valid folder name and existing path; see `local.apps.paths.example`. |
+| **Stale app grid** | Hard refresh. `apps.json` is fetched with `cache: 'no-store'`. |
+| **`?local=1` ignored** | Only on dev-style hosts (loopback, LAN, `*.local`), not on `*.github.io`. |
+| **Verify Yahoo proxy** (server running) | `curl -sS "http://127.0.0.1:8080/__candlescan-yahoo/v8/finance/chart/RELIANCE.NS?interval=5m&range=5d" \| head -c 200` — should return JSON, not HTML error. |
+
+---
+
+## Production deployment (GitHub Pages)
+
+1. Push changes to **`master`** on this repo (GitHub builds the user site from that branch).
+2. **CandleScan:** build and copy from the [candlescan](https://github.com/utkarsh9891/candlescan) repo:
+
+   ```bash
+   cd /path/to/candlescan
+   npm run pages
+   ```
+
+   Then in **this** repo: `git add candlescan`, commit, push to `master`.
+
+3. **`apps.json` / `apps.local.json`:** update `apps.json` for public card text and `status` (`live` vs `placeholder`). Keep `apps.local.json` in sync for local testing, or rely on `?local=1` + `apps.local.json` only.
+
+---
+
+## Related repositories
+
+- **[candlescan](https://github.com/utkarsh9891/candlescan)** — React/Vite source for `/candlescan/`
+- **[PackageSync](https://packagecontrol.io/packages/PackageSync)** — linked from the site as a published tool
+
+---
+
+## License / usage
+
+Site content and code are personal/open as per repository defaults; mini-apps may have their own licenses in their repos.
