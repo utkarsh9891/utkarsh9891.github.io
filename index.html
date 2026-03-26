@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Utkarsh Upadhyay</title>
     <meta name="description"
-        content="Personal site: tools, mini apps, and notes. Hosted on GitHub Pages.">
+        content="Personal site: tools, mini apps, and experiments. Hosted on GitHub Pages.">
     <meta name="author" content="Utkarsh Upadhyay">
     <meta name="robots" content="index,follow">
     <link rel="icon" type="image/png" href="./img/favicon.png">
@@ -29,7 +29,6 @@
         <div class="wrap site-header__inner">
             <a class="wordmark" href="./">utkarsh9891</a>
             <nav class="nav-chips" aria-label="On this page">
-                <a href="#about">Notes</a>
                 <a href="#apps">Apps &amp; tools</a>
             </nav>
         </div>
@@ -51,19 +50,10 @@
             </div>
         </section>
 
-        <section id=”about” class=”about section wrap” aria-labelledby=”about-title”>
-            <div class=”section__head section__head--center”>
-                <h2 id=”about-title” class=”section__title”>Notes</h2>
-                <p class=”section__subtitle”>Reflections from 15+ years of building, scaling, and leading engineering teams.</p>
-            </div>
-
-            <div id=”bubbles” class=”bubbles” role=”list”></div>
-        </section>
-
         <section id="apps" class="apps section wrap" aria-labelledby="apps-title">
             <div class="section__head">
                 <h2 id="apps-title" class="section__title">Apps &amp; tools</h2>
-                <p class="section__subtitle">Links out to things I’ve built or am building.</p>
+                <p class="section__subtitle">Links out to things I've built or am building.</p>
             </div>
             <div id="app-grid" class="app-grid" aria-live="polite">
                 <p class="app-grid__loading">Loading…</p>
@@ -80,12 +70,11 @@
 
     <footer class="site-footer">
         <div class="wrap site-footer__inner">
-            <p>© <span id="y"></span> Utkarsh Upadhyay · <a href="mailto:utkarsh9891@gmail.com">utkarsh9891@gmail.com</a></p>
+            <p>&copy; <span id="y"></span> Utkarsh Upadhyay &middot; <a href="mailto:utkarsh9891@gmail.com">utkarsh9891@gmail.com</a></p>
             <p class="site-footer__meta">Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a></p>
         </div>
     </footer>
 
-    <!-- Fallback if apps.json cannot be loaded (e.g. opening this file via file://). On GitHub Pages, apps.json is the source of truth—copy it here when you want offline preview without a server. -->
     <script type="application/json" id="app-manifest">
 {
   "items": [
@@ -98,16 +87,6 @@
       "tags": ["Sublime Text"],
       "status": "live",
       "icon": "sync"
-    },
-    {
-      "id": "candlescan",
-      "kind": "mini-app",
-      "title": "CandleScan",
-      "href": "https://utkarsh9891.github.io/candlescan/",
-      "description": "NSE-focused candlestick pattern scanner with liquidity box analysis, risk scoring, and interactive charting.",
-      "tags": ["Markets", "React"],
-      "status": "live",
-      "icon": "candle"
     },
     {
       "id": "candlescan",
@@ -134,48 +113,6 @@
     </script>
     <script>
         document.getElementById("y").textContent = new Date().getFullYear();
-
-        // Dynamic notes — shuffled on every page load
-        (function () {
-            var notes = [
-                "The best architecture decision I ever made was the one I delayed until we had real production data.",
-                "Scaling isn't a tech problem. It's a people-and-contracts problem that eventually shows up in your infrastructure.",
-                "I've led teams through three complete platform rewrites. The secret every time: migrate one request path at a time, never big-bang.",
-                "After 15 years, the pattern I trust most is still: measure, cut scope, ship, then iterate. Everything else is fashion.",
-                "The hardest engineering conversations aren't about code. They're about what not to build this quarter.",
-                "I've seen more outages caused by config changes than by code bugs. Treat your config as code or pay for it at 2 AM.",
-                "A VP's job isn't to have the answers. It's to make sure the team has the context to find them faster than you could alone.",
-                "If your monitoring dashboard needs a legend to explain what's critical, your monitoring is already broken.",
-                "Technical debt isn't a backlog item. It's interest you're paying on every feature you ship until you address it.",
-                "The engineers who grow fastest are the ones who ask 'what happens when this fails?' before 'how do I make this work?'",
-                "I've never regretted investing in developer tooling. The ROI compounds silently and shows up as velocity six months later.",
-                "Regulation, compliance, and security aren't blockers. They're constraints that make your architecture honest.",
-                "Most of what I ship in public starts as 'what if I automated this annoying thing?'",
-                "Good abstractions feel like a joke you only get after the third refactor.",
-                "The gap between a senior engineer and a staff engineer is the ability to make the org move, not just the code."
-            ];
-            var styles = [
-                "bubble--lg", "bubble--sm bubble--tilt-right",
-                "bubble--md bubble--tilt-left", "bubble--sm"
-            ];
-            // Fisher-Yates shuffle
-            for (var i = notes.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i + 1));
-                var t = notes[i]; notes[i] = notes[j]; notes[j] = t;
-            }
-            var pick = notes.slice(0, 4);
-            var el = document.getElementById("bubbles");
-            if (!el) return;
-            pick.forEach(function (text, idx) {
-                var bq = document.createElement("blockquote");
-                bq.className = "bubble " + styles[idx % styles.length];
-                bq.setAttribute("role", "listitem");
-                var p = document.createElement("p");
-                p.textContent = text;
-                bq.appendChild(p);
-                el.appendChild(bq);
-            });
-        })();
     </script>
     <script src="./js/site.js" defer></script>
 </body>
