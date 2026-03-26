@@ -31,7 +31,6 @@
     var isPlaceholder = item.status === "placeholder";
     var article = document.createElement("article");
     article.className = "app-card" + (isPlaceholder ? " app-card--placeholder" : " app-card--clickable");
-    if (item.featured) article.classList.add("app-card--featured");
     article.setAttribute("data-app-id", item.id || "");
 
     var inner = document.createElement("div");

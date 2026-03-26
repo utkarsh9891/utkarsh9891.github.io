@@ -25,10 +25,7 @@ npm-debug.log*
 .tmp/
 temp/
 
-## CandleScan now deploys from its own repo via GitHub Actions
-
-## Local-only: mini-app source paths (see local.apps.paths.example)
-local.apps.paths
+## CandleScan deploys from its own repo via GitHub Actions
 
 ## Claude Code
 .claude/
