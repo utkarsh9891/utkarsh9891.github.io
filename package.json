@@ -4,7 +4,6 @@
   "description": "GitHub Pages user site",
   "scripts": {
     "start": "bash scripts/run.sh",
-    "serve:only": "node scripts/local-dev-server.mjs",
-    "publish:candlescan": "bash scripts/publish-candlescan.sh"
+    "serve:only": "node scripts/local-dev-server.mjs"
   }
 }
