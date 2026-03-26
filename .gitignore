@@ -25,7 +25,7 @@ npm-debug.log*
 .tmp/
 temp/
 
-## CandleScan build artifacts are committed (deployed from utkarsh9891/candlescan)
+## CandleScan deploys from its own repo via GitHub Actions
 
-## Local-only: mini-app source paths (see local.apps.paths.example)
-local.apps.paths
+## Claude Code
+.claude/
