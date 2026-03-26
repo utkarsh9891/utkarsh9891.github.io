@@ -22,6 +22,16 @@
       "icon": "candle"
     },
     {
+      "id": "candlescan",
+      "kind": "mini-app",
+      "title": "CandleScan",
+      "href": "https://utkarsh9891.github.io/candlescan/",
+      "description": "NSE-focused candlestick pattern scanner with liquidity box analysis, risk scoring, and interactive charting.",
+      "tags": ["Markets", "React"],
+      "status": "live",
+      "icon": "candle"
+    },
+    {
       "id": "github-profile",
       "kind": "link",
       "title": "GitHub",
