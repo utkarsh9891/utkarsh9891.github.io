@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Utkarsh Upadhyay</title>
     <meta name="description"
-        content="Personal site: tools, mini apps, and notes. Hosted on GitHub Pages.">
+        content="Personal site: tools, mini apps, and experiments. Hosted on GitHub Pages.">
     <meta name="author" content="Utkarsh Upadhyay">
     <meta name="robots" content="index,follow">
     <link rel="icon" type="image/png" href="./img/favicon.png">
@@ -29,7 +29,6 @@
         <div class="wrap site-header__inner">
             <a class="wordmark" href="./">utkarsh9891</a>
             <nav class="nav-chips" aria-label="On this page">
-                <a href="#about">Notes</a>
                 <a href="#apps">Apps &amp; tools</a>
             </nav>
         </div>
@@ -51,32 +50,10 @@
             </div>
         </section>
 
-        <section id="about" class="about section wrap" aria-labelledby="about-title">
-            <div class="section__head section__head--center">
-                <h2 id="about-title" class="section__title">Notes</h2>
-                <p class="section__subtitle">Short scraps—opinions my own, projects may be half-baked.</p>
-            </div>
-
-            <div class="bubbles" role="list">
-                <blockquote class="bubble bubble--lg" role="listitem">
-                    <p>I like systems that still behave when scale, regulation, and real people all arrive at the same time.</p>
-                </blockquote>
-                <blockquote class="bubble bubble--sm bubble--tilt-right" role="listitem">
-                    <p>Good abstractions feel like a joke you only get after the third refactor.</p>
-                </blockquote>
-                <blockquote class="bubble bubble--md bubble--tilt-left" role="listitem">
-                    <p>Most of what I ship in public starts as “what if I automated this annoying thing?”</p>
-                </blockquote>
-                <blockquote class="bubble bubble--sm" role="listitem">
-                    <p>Stuff here is allowed to be unfinished.</p>
-                </blockquote>
-            </div>
-        </section>
-
         <section id="apps" class="apps section wrap" aria-labelledby="apps-title">
             <div class="section__head">
                 <h2 id="apps-title" class="section__title">Apps &amp; tools</h2>
-                <p class="section__subtitle">Links out to things I’ve built or am building.</p>
+                <p class="section__subtitle">Links out to things I've built or am building.</p>
             </div>
             <div id="app-grid" class="app-grid" aria-live="polite">
                 <p class="app-grid__loading">Loading…</p>
@@ -93,25 +70,14 @@
 
     <footer class="site-footer">
         <div class="wrap site-footer__inner">
-            <p>© <span id="y"></span> Utkarsh Upadhyay · <a href="mailto:utkarsh9891@gmail.com">utkarsh9891@gmail.com</a></p>
+            <p>&copy; <span id="y"></span> Utkarsh Upadhyay &middot; <a href="mailto:utkarsh9891@gmail.com">utkarsh9891@gmail.com</a></p>
             <p class="site-footer__meta">Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a></p>
         </div>
     </footer>
 
-    <!-- Fallback if apps.json cannot be loaded (e.g. opening this file via file://). On GitHub Pages, apps.json is the source of truth—copy it here when you want offline preview without a server. -->
     <script type="application/json" id="app-manifest">
 {
   "items": [
-    {
-      "id": "candlescan",
-      "kind": "mini-app",
-      "title": "CandleScan",
-      "href": "https://utkarsh9891.github.io/candlescan/",
-      "description": "NSE-focused candlestick pattern scanner with liquidity box analysis, risk scoring, and interactive charting.",
-      "tags": ["Markets", "React"],
-      "status": "live",
-      "icon": "candle"
-    },
     {
       "id": "packagesync",
       "kind": "tool",
@@ -121,6 +87,16 @@
       "tags": ["Sublime Text"],
       "status": "live",
       "icon": "sync"
+    },
+    {
+      "id": "candlescan",
+      "kind": "mini-app",
+      "title": "CandleScan",
+      "href": "https://utkarsh9891.github.io/candlescan/",
+      "description": "NSE-focused candlestick pattern scanner with liquidity box analysis, risk scoring, and interactive charting.",
+      "tags": ["Markets", "React"],
+      "status": "live",
+      "icon": "candle"
     },
     {
       "id": "github-profile",
