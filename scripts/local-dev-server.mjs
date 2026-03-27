@@ -1,6 +1,7 @@
 /**
- * Static site + Yahoo Finance proxy for local full-site runs (npm start).
- * Same path as Vite dev: /__candlescan-yahoo → query1.finance.yahoo.com
+ * Static site + CandleScan proxies for local full-site runs (npm start).
+ * - /__candlescan-yahoo → query1.finance.yahoo.com
+ * - /candlescan/__candlescan-nse → www.nseindia.com (matches Vite base + NSE path)
  */
 import http from 'http';
 import https from 'https';
@@ -100,6 +101,39 @@ const server = http.createServer((req, res) => {
     pre.on('error', () => {
       res.writeHead(502, { ...CORS, 'Content-Type': 'text/plain' });
       res.end('Yahoo proxy error');
+    });
+    pre.end();
+    return;
+  }
+
+  if (u.pathname.startsWith('/candlescan/__candlescan-nse')) {
+    const nPath = u.pathname.replace(/^\/candlescan\/__candlescan-nse/, '') || '/';
+    const fullPath = nPath + (u.search || '');
+    const opts = {
+      hostname: 'www.nseindia.com',
+      path: fullPath,
+      method: 'GET',
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        Accept: 'application/json',
+        Referer: 'https://www.nseindia.com/',
+      },
+    };
+    const pre = https.request(opts, (nres) => {
+      const out = { ...CORS };
+      const ct = nres.headers['content-type'];
+      if (ct) out['Content-Type'] = ct;
+      res.writeHead(nres.statusCode || 502, out);
+      if (req.method === 'HEAD') {
+        res.end();
+        return;
+      }
+      nres.pipe(res);
+    });
+    pre.on('error', () => {
+      res.writeHead(502, { ...CORS, 'Content-Type': 'text/plain' });
+      res.end('NSE proxy error');
     });
     pre.end();
     return;
