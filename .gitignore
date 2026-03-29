@@ -25,6 +25,10 @@ npm-debug.log*
 .tmp/
 temp/
 
+## Local dev config
+apps.local.json
+node_modules/
+
 ## CandleScan deploys from its own repo via GitHub Actions
 
 ## Claude Code
