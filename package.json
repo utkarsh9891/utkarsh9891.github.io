@@ -1,9 +1,15 @@
 {
   "name": "utkarsh9891-github-io-site",
   "private": true,
+  "type": "module",
   "description": "GitHub Pages user site",
   "scripts": {
     "start": "bash scripts/run.sh",
-    "serve:only": "node scripts/local-dev-server.mjs"
+    "serve:only": "node scripts/local-dev-server.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.2"
   }
 }
