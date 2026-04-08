@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/candlescan/sw.js', { scope: '/candlescan/' })})}
