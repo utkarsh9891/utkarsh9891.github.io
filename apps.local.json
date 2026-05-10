@@ -15,7 +15,7 @@
       "id": "candlescan",
       "kind": "mini-app",
       "title": "CandleScan",
-      "path": "candlescan/",
+      "href": "https://utkarsh9891.github.io/candlescan/",
       "description": "NSE-focused pattern scan, liquidity box readout, and risk score — mobile-first.",
       "tags": ["Markets"],
       "status": "live",

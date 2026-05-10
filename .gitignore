@@ -29,3 +29,7 @@ temp/
 
 ## Claude Code
 .claude/
+
+## Node
+node_modules/
+dist/
